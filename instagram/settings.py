@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'directs',
     'comments',
     'notifications',
+    'crispy_bootstrap4',
 ]
 
 MIDDLEWARE = [

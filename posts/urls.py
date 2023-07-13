@@ -6,6 +6,7 @@ from .views import *
 
 urlpatterns = [
     path('',HomeView.as_view(),name='home'),
+    path('newpost/',NewPost,name='newpost'),
 
 
 

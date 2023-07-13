@@ -4,6 +4,7 @@ from django.shortcuts import redirect, render
 from django.views import View
 from .forms import EditProfileForm, UserRegisterForm
 
+
 class RegisterView(View):
 
     def dispatch(self, request, *args, **kwargs):
