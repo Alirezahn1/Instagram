@@ -209,15 +209,15 @@
                         {% for user in all_users %}
                         {% if request.user.username != user.username %}
                         <div class="side-menu__suggestion">
-                            <a href="" class="side-menu__suggestion-avatar">
+                            <a href="{% url 'profiles:profile' user %}" class="side-menu__suggestion-avatar">
                                 <img src="{{user.profile.image.url}}" alt="User Picture">
                             </a>
 
                             <div class="side-menu__suggestion-info">
                                 {% if user.profile.first_name %}
-                                <a href="">{{user.profile.first_name|title}} {{user.profile.last_name|title}}</a>
+                                <a href="{% url 'profiles:profile' user %}">{{user.profile.first_name|title}} {{user.profile.last_name|title}}</a>
                                 {% else %}
-                                <a href="">{{user.username}}</a>
+                                <a href="{% url 'profiles:profile' user %}">{{user.username}}</a>
                                 {% endif %}
                                 <span>@{{user.username}}</span>
                             </div>
@@ -260,15 +260,15 @@
                         {% for user in all_users %}
                             {% if request.user.username != user.username %}
                             <div class="side-menu__suggestion">
-                                <a href="" class="side-menu__suggestion-avatar">
+                                <a href="{% url 'profiles:profile' user %}" class="side-menu__suggestion-avatar">
                                     <img src="{{user.profile.image.url}}" alt="User Picture">
                                 </a>
 
                                 <div class="side-menu__suggestion-info">
                                     {% if user.profile.first_name %}
-                                    <a href="">{{user.profile.first_name|title}} {{user.profile.last_name|title}}</a>
+                                    <a href="{% url 'profiles:profile' user %}">{{user.profile.first_name|title}} {{user.profile.last_name|title}}</a>
                                     {% else %}
-                                    <a href="">{{user.username}}</a>
+                                    <a href="{% url 'profiles:profile' user %}">{{user.username}}</a>
                                     {% endif %}
                                     <span>@{{user.username}}</span>
                                 </div>

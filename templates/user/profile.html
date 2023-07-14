@@ -87,7 +87,7 @@
                     <div class="profile-user-settings">
                         <a  href="{% url 'profiles:profile' profile.user %}"  class="btns profiele-edit-btn">Posts</a>
                         {% if request.user == profile.user %}
-                        <a  href=""  class="btns profeile-edit-btn">Saved</a>
+                        <a  href="{% url 'profiles:profilefavourite' profile.user %}"  class="btns profeile-edit-btn">Saved</a>
                         {% endif %}
                     </div>
                 </div>
