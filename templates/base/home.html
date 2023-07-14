@@ -140,9 +140,8 @@
 
                         <div class="post__content">
                             <div class="post__medias">
-                                <a href="{% url 'post-details' post.id %}"><img class="post__media" src="{{ post.picture.url }}" alt="Post Content" style="width: 700px; height: 348px; object-fit: cover;"></a>
-<!--                                <img class="post__media" src="{% static 'assets1/insta-clone.png' %}" alt="Post Content">-->
-<!--                                <img class="post__media" src="{% static 'assets1/insta-clone.png' %}" alt="Post Content">-->
+                                <a href="{% url 'posts:post-details' post.id %}"><img class="post__media" src="{{ post.picture.url }}" alt="Post Content" style="width: 700px; height: 348px; object-fit: cover;"></a>
+
                             </div>
                         </div>
 
@@ -177,7 +176,6 @@
                             <div class="post__infos">
                                 <div class="post__likes">
                                     <a href="#" class="post__likes-avatar">
-<!--                                        <img src="assets1/default-user.png" alt="User Picture">-->
                                     </a>
 
 <!--                                    <span>Liked by <a class="post__name&#45;&#45;underline" href="#">user123</a> and <a href="#">73 others</a></span>-->
