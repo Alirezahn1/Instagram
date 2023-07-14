@@ -8,7 +8,7 @@ urlpatterns = [
     path('',index,name='home'),
     path('newpost/',NewPost,name='newpost'),
     path('<uuid:post_id>', PostDetail, name='post-details'),
-
+    path('<uuid:post_id>/like', like, name='like'),
 
 
 
