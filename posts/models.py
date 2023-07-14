@@ -1,15 +1,18 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.db.models.base import Model
 from django.db.models.signals import post_save, post_delete
 from django.utils.text import slugify
 from django.urls import reverse
 import uuid
-# uploading user files to a specific directory
 from notifications.models import Notification
 
 
+
+# uploading user files to a specific directory
 def user_directory_path(instance, filename):
     return 'user_{0}/{1}'.format(instance.user.id, filename)
+
 
 class Tag(models.Model):
     title = models.CharField(max_length=75, verbose_name='Tag')
@@ -30,6 +33,10 @@ class Tag(models.Model):
             self.slug = slugify(self.title)
         return super().save(*args, **kwargs)
 
+# class PostFileContent(models.Model):
+#     user = models.ForeignKey(User, on_delete=models.CASCADE)
+#     file = models.FileField(upload_to=user_directory_path, verbose_name="Choose File")
+
 class Post(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     picture = models.ImageField(upload_to=user_directory_path, verbose_name="Picture",null=True)
@@ -42,8 +49,8 @@ class Post(models.Model):
     def get_absolute_url(self):
         return reverse("posts:post-details", args=[str(self.id)])
 
-    def __str__(self):
-        return str(self.caption)
+    # def __str__(self):
+    #     return str(self.caption)
 
 
 class Likes(models.Model):
@@ -64,9 +71,24 @@ class Likes(models.Model):
         notify = Notification.objects.filter(post=post, sender=sender, notification_types=1)
         notify.delete()
 
+
 class Follow(models.Model):
     follower = models.ForeignKey(User, on_delete=models.CASCADE, related_name='follower')
     following = models.ForeignKey(User, on_delete=models.CASCADE, related_name='following')
+
+    def user_follow(sender, instance, *args, **kwargs):
+        follow = instance
+        sender = follow.follower
+        following = follow.following
+        notify = Notification(sender=sender, user=following, notification_types=3)
+        notify.save()
+
+    def user_unfollow(sender, instance, *args, **kwargs):
+        follow = instance
+        sender = follow.follower
+        following = follow.following
+        notify = Notification.objects.filter(sender=sender, user=following, notification_types=3)
+        notify.delete()
 
 class Stream(models.Model):
     following = models.ForeignKey(User, on_delete=models.CASCADE, null=True, related_name='stream_following')
@@ -83,5 +105,11 @@ class Stream(models.Model):
             stream = Stream(post=post, user=follower.follower, date=post.posted, following=user)
             stream.save()
 
+
 post_save.connect(Stream.add_post, sender=Post)
 
+post_save.connect(Likes.user_liked_post, sender=Likes)
+post_delete.connect(Likes.user_unliked_post, sender=Likes)
+
+post_save.connect(Follow.user_follow, sender=Follow)
+post_delete.connect(Follow.user_unfollow, sender=Follow)

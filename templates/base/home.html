@@ -223,9 +223,9 @@
                             </div>
 
                             {% if follow_status == True %}
-                            <a href="" class="side-menu__suggestion-button">Follow</a>
+                            <a href="{% url 'profiles:follow' profile.user 0 %}" class="side-menu__suggestion-button">Follow</a>
                             {% else %}
-                            <a href="" class="side-menu__suggestion-button" >Follow</a>
+                            <a href="{% url 'profiles:follow' profile.user 1 %}" class="side-menu__suggestion-button" >Follow</a>
                             {% endif %}
                         </div>
                         {% endif %}
@@ -274,9 +274,9 @@
                                 </div>
 
                                 {% if follow_status == True %}
-                                <a href="" class="side-menu__suggestion-button">Follow</a>
+                                <a href="{% url 'profiles:follow' profile.user 0 %}" class="side-menu__suggestion-button">Follow</a>
                                 {% else %}
-                                <a href="" class="side-menu__suggestion-button">Follow</a>
+                                <a href="{% url 'profiles:follow' profile.user 1 %}" class="side-menu__suggestion-button">Follow</a>
                                 {% endif %}
                             </div>
                             {% endif %}

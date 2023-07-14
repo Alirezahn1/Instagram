@@ -2,11 +2,13 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator
+from django.db import transaction
+from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render, get_object_or_404
-from django.urls import resolve
+from django.urls import resolve, reverse
 from django.views import View
 
-from posts.models import Post, Follow
+from posts.models import Post, Follow, Stream
 from .forms import EditProfileForm, UserRegisterForm
 from .models import Profile
 
@@ -74,3 +76,25 @@ def UserProfile(request, username):
         # 'count_comment':count_comment,
     }
     return render(request, 'user/profile.html', context)
+
+
+def follow(request, username, option):
+    user = request.user
+    following = get_object_or_404(User, username=username)
+
+    try:
+        f, created = Follow.objects.get_or_create(follower=request.user, following=following)
+
+        if int(option) == 0:
+            f.delete()
+            Stream.objects.filter(following=following, user=request.user).all().delete()
+        else:
+            posts = Post.objects.all().filter(user=following)[:25]
+            with transaction.atomic():
+                for post in posts:
+                    stream = Stream(post=post, user=request.user, date=post.posted, following=following)
+                    stream.save()
+        return HttpResponseRedirect(reverse('profiles:profile', args=[username]))
+
+    except User.DoesNotExist:
+        return HttpResponseRedirect(reverse('profiles:profile', args=[username]))
