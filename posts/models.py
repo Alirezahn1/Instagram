@@ -5,6 +5,9 @@ from django.utils.text import slugify
 from django.urls import reverse
 import uuid
 # uploading user files to a specific directory
+from notifications.models import Notification
+
+
 def user_directory_path(instance, filename):
     return 'user_{0}/{1}'.format(instance.user.id, filename)
 
@@ -42,6 +45,24 @@ class Post(models.Model):
     def __str__(self):
         return str(self.caption)
 
+
+class Likes(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="post_likes")
+
+    def user_liked_post(sender, instance, *args, **kwargs):
+        like = instance
+        post = like.post
+        sender = like.user
+        notify = Notification(post=post, sender=sender, user=post.user)
+        notify.save()
+
+    def user_unliked_post(sender, instance, *args, **kwargs):
+        like = instance
+        post = like.post
+        sender = like.user
+        notify = Notification.objects.filter(post=post, sender=sender, notification_types=1)
+        notify.delete()
 
 class Follow(models.Model):
     follower = models.ForeignKey(User, on_delete=models.CASCADE, related_name='follower')
