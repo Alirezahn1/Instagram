@@ -14,3 +14,4 @@ class NewPostform(forms.ModelForm):
     class Meta:
         model = Post
         fields = ['picture', 'caption', 'tags']
+
