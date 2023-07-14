@@ -9,7 +9,7 @@ from django.db.models import Q
 
 from comments.models import Comment
 from posts.forms import NewPostform
-from posts.models import Follow, Stream, Post, Tag
+from posts.models import Follow, Stream, Post, Tag, Likes
 from profiles.models import Profile
 
 
@@ -100,3 +100,22 @@ def PostDetail(request, post_id):
     }
 
     return render(request, 'post/postdetail.html', context)
+
+
+@login_required
+def like(request, post_id):
+    user = request.user
+    post = Post.objects.get(id=post_id)
+    current_likes = post.likes
+    liked = Likes.objects.filter(user=user, post=post).count()
+
+    if not liked:
+        Likes.objects.create(user=user, post=post)
+        current_likes = current_likes + 1
+    else:
+        Likes.objects.filter(user=user, post=post).delete()
+        current_likes = current_likes - 1
+
+    post.likes = current_likes
+    post.save()
+    return HttpResponseRedirect(reverse('post-details', args=[post_id]))
