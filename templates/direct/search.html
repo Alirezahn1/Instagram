@@ -12,7 +12,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <script src="https://kit.fontawesome.com/fc1e235b2e.js"></script>
   <link rel="stylesheet" href="{% static 'assets2/style.css' %}">
-  <title>Instagram Login Form</title>
+  <title>Instagram </title>
 </head>
 
 <body>
@@ -45,7 +45,7 @@
 
                     {% endif %}
                 </a>
-                <div class="side-menu__user-idnfo">
+                <div class="side-menu__user-info">
                     {% if user.profile.first_name %}
                     <a href="{% url 'profiles:profile' user.username %}" style="font-size: 15px; color: black; text-align: center;">{{user.profile.first_name|title }} {{user.profile.last_name|title }}</a>
                     {% else%}
@@ -108,7 +108,7 @@
           </ul>
         </nav>
         <div class="copyright-notice">
-          &copy 2019 Instagram
+          &copy 2023 Instagram
         </div>
       </div>
     </footer>
