@@ -61,3 +61,20 @@ def SendDirect(request):
         to_user = User.objects.get(username=to_user_username)
         Message.sender_message(from_user, to_user, body)
         return redirect('directs:message')
+
+def UserSearch(request):
+    query = request.GET.get('q')
+    context = {}
+    if query:
+        users = User.objects.filter(Q(username__icontains=query))
+
+        # Paginator
+        paginator = Paginator(users, 8)
+        page_number = request.GET.get('page')
+        users_paginator = paginator.get_page(page_number)
+
+        context = {
+            'users': users_paginator,
+            }
+
+    return render(request, 'direct/search.html', context)
