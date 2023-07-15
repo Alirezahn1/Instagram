@@ -71,7 +71,7 @@
                                 <a href="{% url 'profile' user.username %}" style="font-size: 10px; color: rgb(75, 75, 75); ">{{ notification.date }}</a>
                             </div>
                         </div>
-                        <a href="{% url 'delete-notification' notification.id %}" type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></a>
+                        <a href="{% url 'notifications:delete-notification' notification.id %}" type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></a>
                       </div>
                 {% endif %}
 
@@ -88,7 +88,7 @@
                       {% endif %}
                     </a>
                      
-                      <div class="side-menu__user-idnfo" style="text-align: start;">
+                      <div class="side-menu__user-info" style="text-align: start;">
                         <a href="{% url 'profiles:profile' user.username %}" style="font-size: 15px; color: black; text-align: center;">{{ notification.sender.profile.first_name|title }} {{ notification.sender.profile.last_name|title }}</a> <br>
                         <a href="{% url 'profiles:profile' user.username %}" style="font-size: 15px; color: black; text-align: center;"><b><i class="bi bi-chat-dots-fill" style="color: rgb(252, 122, 1);"></i> Commented on your post</b></a> <br>
                         <a href="{% url 'profiles:profile' user.username %}" style="font-size: 10px; color: rgb(75, 75, 75); ">{{ notification.date }}</a>
@@ -98,7 +98,7 @@
                         <img src="{{ notification.post.picture.url }}" alt="User Picture">
                       </a>
                   </div>
-                  <a href="{% url 'delete-notification' notification.id %}" type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></a>
+                  <a href="{% url 'notifications:delete-notification' notification.id %}" type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></a>
               </div>
                 {% endif %}
 
