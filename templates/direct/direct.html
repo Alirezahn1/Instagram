@@ -141,7 +141,7 @@
 
 
 						<div class="flex-grow-0 py-3 px-4 border-top">
-							<form method="POST" action="">
+							<form method="POST" action="{% url 'directs:send-directs' %}">
 								{% csrf_token %}
 								<div class="input-group">
 									<input type="hidden" name="to_user" id="" value="{{active_direct}}">

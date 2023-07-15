@@ -52,3 +52,12 @@ def Directs(request, username):
     return render(request, 'direct/direct.html', context)
 
 
+def SendDirect(request):
+    from_user = request.user
+    to_user_username = request.POST.get('to_user')
+    body = request.POST.get('body')
+
+    if request.method == "POST":
+        to_user = User.objects.get(username=to_user_username)
+        Message.sender_message(from_user, to_user, body)
+        return redirect('directs:message')
