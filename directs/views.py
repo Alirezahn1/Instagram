@@ -31,3 +31,21 @@ def inbox(request):
         'profile': profile,
     }
     return render(request, 'direct/direct.html', context)
+
+@login_required
+def Directs(request, username):
+    user  = request.user
+    messages = Message.get_message(user=user)
+    active_direct = username
+    directs = Message.objects.filter(user=user, reciepient__username=username)
+    directs.update(is_read=True)
+
+    for message in messages:
+            if message['user'].username == username:
+                message['unread'] = 0
+    context = {
+        'directs': directs,
+        'messages': messages,
+        'active_direct': active_direct,
+    }
+    return render(request, 'direct/direct.html', context)
