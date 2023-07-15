@@ -131,3 +131,15 @@ def favourite(request, post_id):
     else:
         profile.favourite.add(post)
     return HttpResponseRedirect(reverse('posts:post-details', args=[post_id]))
+
+@login_required
+def Tags(request, tag_slug):
+    tag = get_object_or_404(Tag, slug=tag_slug)
+    posts = Post.objects.filter(tags=tag).order_by('-posted')
+
+    context = {
+        'posts': posts,
+        'tag': tag
+
+    }
+    return render(request, 'post/tag.html', context)
