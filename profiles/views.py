@@ -98,3 +98,26 @@ def follow(request, username, option):
 
     except User.DoesNotExist:
         return HttpResponseRedirect(reverse('profiles:profile', args=[username]))
+
+def EditProfile(request):
+    user = request.user.id
+    profile = Profile.objects.get(user__id=user)
+
+    if request.method == "POST":
+        form = EditProfileForm(request.POST, request.FILES, instance=request.user.profile)
+        if form.is_valid():
+            profile.image = form.cleaned_data.get('image')
+            profile.first_name = form.cleaned_data.get('first_name')
+            profile.last_name = form.cleaned_data.get('last_name')
+            profile.location = form.cleaned_data.get('location')
+            profile.url = form.cleaned_data.get('url')
+            profile.bio = form.cleaned_data.get('bio')
+            profile.save()
+            return redirect('profiles:profile', profile.user.username)
+    else:
+        form = EditProfileForm(instance=request.user.profile)
+
+    context = {
+        'form':form,
+    }
+    return render(request, 'user/editprofile.html', context)

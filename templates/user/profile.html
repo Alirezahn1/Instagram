@@ -38,12 +38,12 @@
 
                 <div class="profile-user-settings">
                         {% if profile.first_name %}
-                        <h6 class="profile-user-name">{{profile.first_name}} {{profile.last_name}}</h6> <br>
+                        <h6 class="profile-user-name">{{profile.first_name}} {{profile.last_name}}</h6> <br> <br>
                         {% endif %}
-                        <h5 style="font-size: 15px;" class="profile-user-name">@{{profile.user.username}}</h5>
+                        <h5 style="font-size: 15px;" class="profile-user-name">@{{profile.user.username}}</h5> <br> <br>
 
                         {% if request.user.is_authenticated and request.user == profile.user %}
-                        <a style="text-decoration: none;" href="" class="btn profile-edit-btn">Edit Profile</a>
+                        <a style="text-decoration: none;" href="{% url 'profiles:editprofile' %}" class="btn profile-edit-btn">Edit Profile</a>
                         <a style="text-decoration: none;" href="{% url 'profiles:sign-out' %}" class="btn profile-edit-btn">Logout</a>
                         <button class="btn profile-settings-btn" aria-label="profile settings"><i class="fas fa-cog" aria-hidden="true"></i></button>
 
