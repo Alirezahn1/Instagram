@@ -89,7 +89,7 @@ def PostDetail(request, post_id):
             comment.post = post
             comment.user = user
             comment.save()
-            return HttpResponseRedirect(reverse('post-details', args=[post.id]))
+            return HttpResponseRedirect(reverse('posts:post-details', args=[post.id]))
     else:
         form = NewCommentForm()
 
