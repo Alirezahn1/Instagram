@@ -18,7 +18,7 @@ def inbox(request):
     if messages:
         message = messages[0]
         active_direct = message['user'].username
-        directs = Message.objects.filter(user=request.user, reciepient=message['user'])
+        directs = Message.objects.filter(user=request.user, recipient=message['user'])
         directs.update(is_read=True)
 
         for message in messages:
@@ -32,12 +32,13 @@ def inbox(request):
     }
     return render(request, 'direct/direct.html', context)
 
+
 @login_required
 def Directs(request, username):
-    user  = request.user
+    user = request.user
     messages = Message.get_message(user=user)
     active_direct = username
-    directs = Message.objects.filter(user=user, reciepient__username=username)
+    directs = Message.objects.filter(user=user, recipient__username=username)
     directs.update(is_read=True)
 
     for message in messages:
@@ -49,3 +50,5 @@ def Directs(request, username):
         'active_direct': active_direct,
     }
     return render(request, 'direct/direct.html', context)
+
+

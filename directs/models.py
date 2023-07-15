@@ -16,7 +16,7 @@ class Message(models.Model):
         sender_message = Message(
             user=from_user,
             sender=from_user,
-            reciepient=to_user,
+            recipient=to_user,
             body=body,
             is_read=True
         )
@@ -25,7 +25,7 @@ class Message(models.Model):
         recipient_message = Message(
             user=to_user,
             sender=from_user,
-            reciepient=from_user,
+            recipient=from_user,
             body=body,
             is_read=True
         )
@@ -39,6 +39,6 @@ class Message(models.Model):
             users.append({
                 'user': User.objects.get(pk=message['recipient']),
                 'last': message['last'],
-                'unread': Message.objects.filter(user=user, reciepient__pk=message['recipient'], is_read=False).count()
+                'unread': Message.objects.filter(user=user, recipient__pk=message['recipient'], is_read=False).count()
             })
         return users
