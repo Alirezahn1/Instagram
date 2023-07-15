@@ -23,7 +23,7 @@ class Tag(models.Model):
         verbose_name_plural = 'Tags'
 
     def get_absolute_url(self):
-        return reverse('tags', args=[self.slug])
+        return reverse('posts:tags', args=[self.slug])
 
     def __str__(self):
         return self.title
