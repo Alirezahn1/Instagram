@@ -78,3 +78,14 @@ def UserSearch(request):
             }
 
     return render(request, 'direct/search.html', context)
+
+def NewConversation(request, username):
+    from_user = request.user
+    body = ''
+    try:
+        to_user = User.objects.get(username=username)
+    except Exception as e:
+        return redirect('directs:search-users')
+    if from_user != to_user:
+        Message.sender_message(from_user, to_user, body)
+    return redirect('directs:message')
