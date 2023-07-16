@@ -1,24 +1,13 @@
 {% extends 'base/base.html' %}
 {% load static %}
+{% block title %} Profile Page{% endblock %}
 {% block content %}
-<!DOCTYPE html>
-<html lang="en">
 <head>
 
-    <!-- Metadata -->
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta name="author" content="George W. Park">
-    <meta name="description" content="This project demonstrates how CSS grid (with flexbox and float fallback) can be used to re-create the layout of an Instagram profile page.">
 
-    <!-- Title -->
-    <title>Instagram Profile Layout</title>
-
-    <!-- External CSS Files -->
     <link rel="stylesheet" href="{% static 'assets3/css/reset.css' %}">
     <link rel="stylesheet" href="{% static 'assets3/css/styles.css' %}">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600">
+
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
 
 </head>
@@ -84,10 +73,10 @@
                     <p><span class="profile-real-name"></span>◉ <a href="{{profile.url}}">{{profile.url}}</a></p>
                     {% endif %}
                     <br><br>
-                    <div class="profile-user-settings">
-                        <a  href="{% url 'profiles:profile' profile.user %}"  class="btns profiele-edit-btn">Posts</a>
+                    <div class="profile-user-settings" style="margin-bottom:6mm">
+                        <a  href="{% url 'profiles:profile' profile.user %}"  class="btn profile-edit-btn">Posts</a>
                         {% if request.user == profile.user %}
-                        <a  href="{% url 'profiles:profilefavourite' profile.user %}"  class="btns profeile-edit-btn">Saved</a>
+                        <a  href="{% url 'profiles:profilefavourite' profile.user %}"  class="btn profile-edit-btn" >Saved</a>
                         {% endif %}
                     </div>
                 </div>
